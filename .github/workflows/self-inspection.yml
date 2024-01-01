@@ -17,6 +17,6 @@ jobs:
 
       - name: run-self-inspection
         uses: ./
-        if: vars.RUN_SELF_INSPECTION  == 'true'
+        if: github.repository == 'al-imam/action-ts-template'
         with:
           milliseconds: 2000
