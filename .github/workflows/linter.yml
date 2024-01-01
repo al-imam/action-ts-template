@@ -26,19 +26,26 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: npm
 
-      - name: Install Dependencies
-        id: install
-        run: npm ci
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key:
+            ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-
+      - name: Install dependencies
+        run: npm install
 
       - name: Lint Codebase
         id: super-linter
         uses: super-linter/super-linter/slim@v5
+        with:
+          TYPESCRIPT_ES_CONFIG_FILE: ${DEFAULT_WORKSPACE}/.eslintrc.json
         env:
           DEFAULT_BRANCH: main
           FILTER_REGEX_EXCLUDE: entry/**/*
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TYPESCRIPT_DEFAULT_STYLE: prettier
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_JAVASCRIPT_STANDARD: false
