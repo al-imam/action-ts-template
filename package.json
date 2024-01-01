@@ -1,16 +1,16 @@
 {
-  "name": "github-action-starter",
+  "name": "action-ts-template",
   "description": "GitHub Actions TypeScript Template",
   "version": "0.0.0",
   "author": "al-imam",
   "private": true,
-  "homepage": "https://github.com/al-imam/github-action-starter",
+  "homepage": "https://github.com/al-imam/action-ts-template",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/al-imam/github-action-starter.git"
+    "url": "git+https://github.com/al-imam/action-ts-template.git"
   },
   "bugs": {
-    "url": "https://github.com/al-imam/github-action-starter/issues"
+    "url": "https://github.com/al-imam/action-ts-template/issues"
   },
   "exports": {
     ".": "./entry/index.js"

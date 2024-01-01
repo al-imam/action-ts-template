@@ -1,6 +1,7 @@
-name: Lint Codebase
+name: enforce-coding-standards-and-guidelines
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
@@ -12,37 +13,30 @@ permissions:
   statuses: write
 
 jobs:
-  lint:
-    name: Lint Codebase
+  lint-codebase:
+    name: lint-codebase
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: checkout-repository
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        id: setup-node
-        uses: actions/setup-node@v4
+      - name: setup-nodejs-environment
+        id: setup-node-env
+        uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+          cache: "npm"
+          cache-dependency-path: package.json
 
-      - name: Cache NPM dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key:
-            ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-npm-cache-
-      - name: Install dependencies
+      - name: install-npm-dependencies
+        id: install-deps
         run: npm install
 
-      - name: Lint Codebase
+      - name: run-super-linter
         id: super-linter
         uses: super-linter/super-linter/slim@v5
-        with:
-          TYPESCRIPT_ES_CONFIG_FILE: ${DEFAULT_WORKSPACE}/.eslintrc.json
         env:
           DEFAULT_BRANCH: main
           FILTER_REGEX_EXCLUDE: entry/**/*
@@ -50,3 +44,4 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_JAVASCRIPT_STANDARD: false
           VALIDATE_JSCPD: false
+          VALIDATE_TYPESCRIPT_ES: true

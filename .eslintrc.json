@@ -15,13 +15,12 @@
     "sourceType": "module",
     "project": ["./tsconfig.json"]
   },
-  "plugins": ["jest", "@typescript-eslint"],
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:github/recommended",
-    "plugin:jest/recommended"
+    "plugin:github/recommended"
   ],
   "rules": {
     "camelcase": "off",

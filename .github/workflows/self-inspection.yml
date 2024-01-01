@@ -1,0 +1,22 @@
+name: test-github-actions-workflow
+run-name: ${{ github.actor }} is testing out github actions 🚀
+on: [push]
+jobs:
+  greeting:
+    name: display-greeting-message
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 Hello ${{ github.actor }}."
+
+  self-inspection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: run-self-inspection
+        uses: ./
+        if: vars.RUN_SELF_INSPECTION  == 'true'
+        with:
+          milliseconds: 2000
